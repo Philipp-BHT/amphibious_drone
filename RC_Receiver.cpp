@@ -3,12 +3,12 @@
 
 
 RC_Receiver::RC_Receiver() {
-    channel_pins[0] = 13; 
-    channel_pins[1] = 12; 
-    channel_pins[2] = 8; 
-    channel_pins[3] = 7; 
-    channel_pins[4] = 4; 
-    channel_pins[5] = 2; 
+    channel_pins[0] = 3; 
+    channel_pins[1] = 4; 
+    channel_pins[2] = 7; 
+    channel_pins[3] = 8; 
+    channel_pins[4] = 12; 
+    channel_pins[5] = 13; 
 
     for (int i = 0; i < NUM_CHANNELS; i++) {
         pinMode(channel_pins[i], INPUT);
