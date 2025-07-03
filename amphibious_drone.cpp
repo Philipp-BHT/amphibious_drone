@@ -6,7 +6,8 @@
 
 DroneController::~DroneController() {};
 
-void DroneController::drone_control(RC_Receiver& receiver, BLDCController& motorController, ServoController& bouyancy_controller) {
+
+void DroneController::drone_control(RC_Receiver& receiver, BLDCController& motorController, ServoController& bouyancyController) {
     float joystick_x = receiver.read_channel(1);
     float joystick_y = receiver.read_channel(2);
     float speed_mode_switch = receiver.read_channel(5);
@@ -15,13 +16,12 @@ void DroneController::drone_control(RC_Receiver& receiver, BLDCController& motor
     motorController.setSpeedFactor(speed_mode_switch > 0 ? HIGH : LOW);
     motorController.setMotorSpeeds(joystick_x, joystick_y);
 
-    ServoDirection dir = bouyancy_controller.mapSwitchToDirection(buoyancy_control);
-    bouyancy_controller.startBallast(dir);
+    ServoDirection dir = bouyancyController.mapSwitchToDirection(buoyancy_control);
+    bouyancyController.startBallast(dir);
 }
 
 
-void DroneController::channel_output_test (RC_Receiver& receiver) {
-    static int channel = 7;
+void DroneController::channel_output_test (RC_Receiver& receiver, int channel = 1, bool cycle_channels = False) {
     float channel_value = 0;
 
     channel_value = receiver.read_channel(channel);
@@ -30,5 +30,6 @@ void DroneController::channel_output_test (RC_Receiver& receiver) {
     Serial.print(": ");
     Serial.print(channel_value);
     Serial.println();
-    // channel = (channel + 1) % rc.NUM_CHANNELS;
+    if (cycle_channels)
+        channel = (channel + 1) % receiver.NUM_CHANNELS;
 }

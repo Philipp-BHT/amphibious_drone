@@ -11,6 +11,6 @@ void setup() {
 }
 
 void loop() {
-    drone.drone_control(receiver, motorController);
+    drone.drone_control(receiver, motorController, bouyancy_controller);
     // drone.channel_output_test(receiver);
 }
