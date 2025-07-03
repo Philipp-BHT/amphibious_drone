@@ -11,6 +11,7 @@ class ServoController {
         ~ServoController();
         void startBallast(ServoDirection dir);
         void updateBallast();
+        ServoDirection ServoController::mapSwitchToDirection(float input);
 
     private:
         ServoDirection servo_state;

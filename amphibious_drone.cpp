@@ -1,19 +1,26 @@
 #include "amphibious_drone.h"
 #include "RC_Receiver.h"
 #include "bldc_controller.h"
+#include "servo_controller.h"
 
 
-void drone_control(RC_Receiver& receiver, BLDCController& motorController) {
-    float left_input = receiver.read_channel(1);
-    float right_input = receiver.read_channel(2);
-    float switch_value = receiver.read_channel(3);
+DroneController::~DroneController() {};
 
-    motorController.setSpeedFactor(switch_value > 0 ? HIGH : LOW);
-    motorController.setMotorSpeeds(left_input, right_input);
+void DroneController::drone_control(RC_Receiver& receiver, BLDCController& motorController, ServoController& bouyancy_controller) {
+    float joystick_x = receiver.read_channel(1);
+    float joystick_y = receiver.read_channel(2);
+    float speed_mode_switch = receiver.read_channel(5);
+    float buoyancy_control = receiver.read_channel(6);
+
+    motorController.setSpeedFactor(speed_mode_switch > 0 ? HIGH : LOW);
+    motorController.setMotorSpeeds(joystick_x, joystick_y);
+
+    ServoDirection dir = bouyancy_controller.mapSwitchToDirection(buoyancy_control);
+    bouyancy_controller.startBallast(dir);
 }
 
 
-void channel_output_test (RC_Receiver& receiver) {
+void DroneController::channel_output_test (RC_Receiver& receiver) {
     static int channel = 7;
     float channel_value = 0;
 
