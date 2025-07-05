@@ -99,3 +99,7 @@ build/sketch/servo_controller.h
 .vscode/c_cpp_properties.json
 .vscode/arduino.json
 .vscode/c_cpp_properties.json
+build/sketch/drone_controller.cpp
+build/sketch/drone_controller.cpp.d
+build/sketch/drone_controller.cpp.o
+build/sketch/drone_controller.h

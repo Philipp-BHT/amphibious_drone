@@ -1,5 +1,5 @@
-#ifndef AMPHIBIOUS_DRONE_H
-#define AMPHIBIOUS_DRONE_H
+#ifndef DRONE_CONTROLLER_H
+#define DRONE_CONTROLLER_H
 
 #include "rc_receiver.h"
 #include "bldc_controller.h"
