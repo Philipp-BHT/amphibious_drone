@@ -1,16 +1,16 @@
 #ifndef AMPHIBIOUS_DRONE_H
 #define AMPHIBIOUS_DRONE_H
 
-#include "RC_Receiver.h"
+#include "rc_receiver.h"
 #include "bldc_controller.h"
 #include "servo_controller.h"
 
 class DroneController {
-    private:
+    public:
     DroneController();
     ~DroneController();
 
-    public:
+    
     /**
      * @brief Reads RC channel values and controls motor and ballast systems accordingly.
      *
@@ -35,7 +35,7 @@ class DroneController {
      * @param buoyancyController Reference to a ServoController instance.
      */
     void channel_output_test(RC_Receiver& receiver, int channel, bool cycle_channels);
-}
+};
 
 
 #endif

@@ -23,10 +23,11 @@ class RC_Receiver {
          * @param channel Channel to be read.
          */
         float read_channel(int channel);
+        int get_num_channels();
         
     private:
-        int channel_pins[NUM_CHANNELS];
         static const int NUM_CHANNELS = 6;
+        int channel_pins[NUM_CHANNELS];
 };
 
 #endif

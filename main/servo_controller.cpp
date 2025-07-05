@@ -1,4 +1,5 @@
 #include "servo_controller.h"
+#include <Arduino.h>
 
 
 ServoController::ServoController(){

@@ -6,7 +6,7 @@
  *
  * HIGH applies a higher speed multiplier, LOW applies a reduced one.
  */
-enum speedFactor {HIGH, LOW};
+enum speedFactor {SPEED_HIGH, SPEED_LOW};
 
 class BLDCController {
 public:
@@ -38,7 +38,7 @@ public:
 
 private:
     int motor_pins[2];                  ///< PWM output pins for left and right motors
-    speedFactor speed_factor = LOW;     ///< Current speed mode
+    speedFactor speed_factor = SPEED_LOW;     ///< Current speed mode
 };
 
 #endif

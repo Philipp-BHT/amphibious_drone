@@ -1,5 +1,6 @@
 {
     "port": "COM6",
     "board": "arduino:avr:uno",
-    "sketch": "amphibious_drone.ino"
+    "sketch": "main\\main.ino",
+    "output": "build"
 }

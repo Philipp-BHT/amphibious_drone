@@ -2,8 +2,6 @@
 #include <Arduino.h>
 
 
-enum speedFactor {HIGH, LOW};
-
 BLDCController::BLDCController() {
     motor_pins[0] = 5;
     motor_pins[1] = 6;
@@ -15,7 +13,7 @@ BLDCController::BLDCController() {
 BLDCController::~BLDCController() {};
 
 void BLDCController::setMotorSpeeds(float channel_1, float channel_2) {
-    float multiplier = (speed_factor == HIGH) ? 0.25 : 0.1;
+    float multiplier = (speed_factor == SPEED_HIGH) ? 0.25 : 0.1;
 
     float mL = fmax(-1.0, fmin(1.0, channel_2 + channel_1));
     float mR = fmax(-1.0, fmin(1.0, channel_2 - channel_1));

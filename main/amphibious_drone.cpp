@@ -1,9 +1,11 @@
+#include <Arduino.h>
 #include "amphibious_drone.h"
-#include "RC_Receiver.h"
+#include "rc_receiver.h"
 #include "bldc_controller.h"
 #include "servo_controller.h"
 
 
+DroneController::DroneController() {};
 DroneController::~DroneController() {};
 
 
@@ -21,7 +23,7 @@ void DroneController::drone_control(RC_Receiver& receiver, BLDCController& motor
 }
 
 
-void DroneController::channel_output_test (RC_Receiver& receiver, int channel = 1, bool cycle_channels = False) {
+void DroneController::channel_output_test (RC_Receiver& receiver, int channel = 1, bool cycle_channels = false) {
     float channel_value = 0;
 
     channel_value = receiver.read_channel(channel);
@@ -31,5 +33,5 @@ void DroneController::channel_output_test (RC_Receiver& receiver, int channel = 
     Serial.print(channel_value);
     Serial.println();
     if (cycle_channels)
-        channel = (channel + 1) % receiver.NUM_CHANNELS;
+        channel = (channel + 1) % receiver.get_num_channels();
 }

@@ -28,4 +28,9 @@ float RC_Receiver::read_channel(int channel) {
 
     float normalized = ((float)pulse_width - 1500.0f) / 500.0f;
     return constrain(normalized, -1.0f, 1.0f);
-}
+};
+
+
+int RC_Receiver::get_num_channels() {
+    return NUM_CHANNELS;
+};
