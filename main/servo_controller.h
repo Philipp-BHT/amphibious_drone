@@ -3,7 +3,7 @@
 
 #include <Servo.h>
 
-enum ServoDirection { STOPPED, FORWARD, REVERSE };
+enum ServoDirection { STOPPED, REVERSE, FORWARD};
 
 class ServoController {
     public:
@@ -15,6 +15,8 @@ class ServoController {
          */
         ServoController();
         ~ServoController();
+
+        void begin(); 
 
         /**
          * @brief Starts the rotation of the ballast tank servo motor.
@@ -31,9 +33,11 @@ class ServoController {
          *
          * Checks whether the servo is currently rotating. If so, it compares the elapsed time
          * since activation to the predefined rotation duration. If the duration is exceeded,
-         * the servo is stopped (by sending a 90° command) and the state is set to STOPPED.
+         * the servo is stopped (by sending a 90 deg command) and the state is set to STOPPED.
          */
         void updateBallast();
+
+        void setBallast(int val);
 
         /** 
          * @brief Maps a float value to an enum representing rotational direction.

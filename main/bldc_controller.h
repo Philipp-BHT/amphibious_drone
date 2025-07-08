@@ -1,6 +1,9 @@
 #ifndef BLDC_CONTROLLER_H
 #define BLDC_CONTROLLER_H
 
+#include <Servo.h>
+
+
 /**
  * @brief Speed factor used to scale motor output.
  *
@@ -17,6 +20,8 @@ public:
     
     ~BLDCController();
 
+    void begin();
+
     /**
      * @brief Sets motor speeds based on joystick channel input.
      *
@@ -29,6 +34,8 @@ public:
      */
     void setMotorSpeeds(float channel_1, float channel_2);
 
+    void setRawPWM(int pwmLeft, int pwmRight);
+
     /**
      * @brief Sets the speed factor mode (HIGH or LOW).
      *
@@ -37,7 +44,8 @@ public:
     void setSpeedFactor(speedFactor factor);
 
 private:
-    int motor_pins[2];                  ///< PWM output pins for left and right motors
+    Servo escLeft;
+    Servo escRight;                ///< PWM output pins for left and right motors
     speedFactor speed_factor = SPEED_LOW;     ///< Current speed mode
 };
 

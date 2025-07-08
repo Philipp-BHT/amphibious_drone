@@ -1,8 +1,12 @@
 #include "rc_receiver.h"
 #include <Arduino.h>
 
+const ChannelCalibration RC_Receiver::JOYSTICK_X = {975, 1959, 1475};
+const ChannelCalibration RC_Receiver::JOYSTICK_Y = {980, 1955, 1478};
 
-RC_Receiver::RC_Receiver() {
+RC_Receiver::RC_Receiver(bool dev) {
+    debug_mode = dev;
+    
     channel_pins[0] = 3; 
     channel_pins[1] = 4; 
     channel_pins[2] = 7; 
@@ -13,10 +17,17 @@ RC_Receiver::RC_Receiver() {
     for (int i = 0; i < NUM_CHANNELS; i++) {
         pinMode(channel_pins[i], INPUT);
     }
-
 };
 
 RC_Receiver::~RC_Receiver() {};
+
+float RC_Receiver::normalize_pwm(int pulse_width, const ChannelCalibration& calib) {
+    float normalized = (float)(pulse_width - calib.center_raw) /
+                       (pulse_width >= calib.center_raw
+                           ? (calib.max_raw - calib.center_raw)
+                           : (calib.center_raw - calib.min_raw));
+    return constrain(normalized, -1.0f, 1.0f);
+}
 
 float RC_Receiver::read_channel(int channel) {
     if (channel < 1 || channel > NUM_CHANNELS) return 0.0;
@@ -25,10 +36,27 @@ float RC_Receiver::read_channel(int channel) {
 
     delay(3);
     unsigned long pulse_width = pulseIn(pin, HIGH, 25000);
+    float normalized;
 
-    float normalized = ((float)pulse_width - 1500.0f) / 500.0f;
+    if (channel == 1)
+        normalized = normalize_pwm(pulse_width, JOYSTICK_X);
+    else if (channel == 2)
+        normalized = normalize_pwm(pulse_width, JOYSTICK_Y);
+    else
+        normalized = ((float)pulse_width - 1500.0f) / 500.0f;
+
+    if (debug_mode && channel == 1) {
+        Serial.print("CH");
+        Serial.print(channel);
+        Serial.print(" raw: ");
+        Serial.print(pulse_width);
+        Serial.print(" -> norm: ");
+        Serial.println(normalized, 3);
+    }
+    
     return constrain(normalized, -1.0f, 1.0f);
 };
+
 
 
 int RC_Receiver::get_num_channels() {

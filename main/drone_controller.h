@@ -6,6 +6,9 @@
 #include "servo_controller.h"
 
 class DroneController {
+    private:
+        bool armed = false;
+
     public:
     DroneController();
     ~DroneController();
@@ -24,6 +27,18 @@ class DroneController {
      * @param buoyancyController Reference to a ServoController instance.
      */
     void drone_control(RC_Receiver& receiver, BLDCController& motorController, ServoController& bouyancy_controller);
+
+    /**
+     * @brief Reads RC channel 5 and 6 and waits until they are in startup position.
+     *
+     * On startup, waits until channel 5 and 6 are in startup position. Once they are in startup 
+     * position, breaks  the loop and returns 1 in order to commence regular operation 
+     * 
+     * @param receiver Reference to an RC_Receiver instance.
+     */
+    void drone_startup(RC_Receiver& receiver, ServoController& servo, BLDCController& motorController);
+
+    bool get_arming_status();
 
     /**
      * @brief Reads channel values and prints the output.

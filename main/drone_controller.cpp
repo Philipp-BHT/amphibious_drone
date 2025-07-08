@@ -8,6 +8,36 @@
 DroneController::DroneController() {};
 DroneController::~DroneController() {};
 
+void DroneController::drone_startup(RC_Receiver& receiver, ServoController& servo, BLDCController& motorController) {
+    Serial.print("Drone not armed");
+    Serial.println();
+
+    Serial.println("Sending neutral throttle to arm ESCs...");
+
+    // motorController.setRawPWM(1500, 1500); 
+    motorController.setMotorSpeeds(1500, 1500);
+    delay(3000); 
+
+    Serial.println("Waiting for switches in neutral position...");
+
+    while(1) {
+        float ch_5 = receiver.read_channel(5);
+        float ch_6 = receiver.read_channel(6);
+        ServoDirection ch_6_dir = servo.mapSwitchToDirection(ch_6);
+        if (ch_5 > 0.5 && ch_6_dir == STOPPED) {
+            Serial.print("Drone armed");
+            Serial.println();
+            armed = true;
+            break;
+        }
+        delay(100);
+    }
+};
+
+bool DroneController::get_arming_status() {
+    return armed;
+};
+
 
 void DroneController::drone_control(RC_Receiver& receiver, BLDCController& motorController, ServoController& bouyancyController) {
     float joystick_x = receiver.read_channel(1);

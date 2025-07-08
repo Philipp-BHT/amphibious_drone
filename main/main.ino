@@ -2,15 +2,25 @@
 #include "drone_controller.h"
 
 DroneController drone;
-RC_Receiver receiver;
-BLDCController motorController;
-ServoController bouyancy_controller;
+RC_Receiver receiver(false);
+BLDCController *motorController;
+ServoController* bouyancy_controller;
 
 void setup() {
     Serial.begin(9600);
+    delay(50);
+    bouyancy_controller = new ServoController();
+    bouyancy_controller->begin();        
+
+    motorController = new BLDCController();
+    motorController->begin();
+
 }
 
 void loop() {
-    drone.drone_control(receiver, motorController, bouyancy_controller);
-    // drone.channel_output_test(receiver);
+    if (!drone.get_arming_status()) {
+        drone.drone_startup(receiver, *bouyancy_controller, *motorController);  
+    } else {
+        drone.drone_control(receiver, *motorController, *bouyancy_controller);
+    }
 }
