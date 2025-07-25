@@ -14,8 +14,6 @@ void DroneController::drone_startup(RC_Receiver& receiver, ServoController& serv
 
     Serial.println("Sending neutral throttle to arm ESCs...");
 
-    // motorController.setRawPWM(1500, 1500); 
-    motorController.setMotorSpeeds(1500, 1500);
     delay(3000); 
 
     Serial.println("Waiting for switches in neutral position...");
@@ -25,6 +23,7 @@ void DroneController::drone_startup(RC_Receiver& receiver, ServoController& serv
         float ch_6 = receiver.read_channel(6);
         ServoDirection ch_6_dir = servo.mapSwitchToDirection(ch_6);
         if (ch_5 > 0.5 && ch_6_dir == STOPPED) {
+            motorController.setMotorSpeeds(1500, 1500);
             Serial.print("Drone armed");
             Serial.println();
             armed = true;

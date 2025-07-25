@@ -14,7 +14,6 @@ void setup() {
 
     motorController = new BLDCController();
     motorController->begin();
-
 }
 
 void loop() {
