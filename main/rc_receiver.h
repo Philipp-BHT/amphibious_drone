@@ -24,7 +24,7 @@ class RCReceiver {
         /**
          * @brief Reads a channel value from a PWM signal and returns it as a normalized float.
          *
-         * The function checks if the selected channels is among the valid channels, and if so,
+         * The method checks if the selected channels is among the valid channels, and if so,
          * determines the pulse width of the signal on that pin bound to that channel . 
          * That pulse width is normalized, clamped to values between [-1, 1] and returned as a float.
          * 
@@ -33,6 +33,16 @@ class RCReceiver {
         float read_channel(int channel);
 
         int get_num_channels();
+
+        /**
+         * @brief Normalizes the pwm input values of a joystick.
+         *
+         * The method normalizes a pwm signal and adjusts the normalization range based on 
+         * values measured for each joystick
+         * 
+         * @param pulse_width pwm signal to be normalized.
+         * @param calib calibration values for the selected joystick
+         */
 
         float normalize_pwm(int pulse_width, const ChannelCalibration& calib);
 

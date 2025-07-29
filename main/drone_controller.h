@@ -11,6 +11,16 @@ class DroneController {
         bool std_speed_factor = false;
 
     public:
+    /**
+     * @brief Initializes the Drone Contoller.
+     *
+     * Changes the way the speed multiplier is determined based on the std_speed_factor flag. If 
+     * set to true, the speed multiplier is determined using predefined values, selected by a flip 
+     * switch. If set to false, the speed multiplier is determined by the position of the left 
+     * joystick. 
+     * 
+     * @param std_speed_factor Boolean that determines the way the speed multiplier is calculated.
+     */
     DroneController(bool std_speed_factor = false);
     ~DroneController();
 
@@ -18,7 +28,7 @@ class DroneController {
     /**
      * @brief Reads RC channel values and controls motor and ballast systems accordingly.
      *
-     * This function reads values from RC channels 1, 2, 5, and 6. Channel 5 is used to set
+     * This method reads values from RC channels 1, 2, 5, and 6. Channel 5 is used to set
      * the motor speed mode (LOW or HIGH). Channels 1 and 2 are used to control motor direction
      * and speed. Channel 6 controls the direction of the servo responsible for the ballast 
      * tank by mapping it to a ServoDirection value.
