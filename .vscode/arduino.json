@@ -2,5 +2,6 @@
     "port": "COM6",
     "board": "arduino:avr:uno",
     "sketch": "main\\main.ino",
-    "output": "build"
+    "output": "build",
+    "programmer": "arduinoisp"
 }

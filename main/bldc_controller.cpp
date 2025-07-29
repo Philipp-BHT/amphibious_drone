@@ -18,8 +18,12 @@ void BLDCController::setRawPWM(int pwmLeft, int pwmRight) {
     escRight.writeMicroseconds(pwmRight);
 }
 
-void BLDCController::setMotorSpeeds(float channel_1, float channel_2) {
-    float multiplier = (speed_factor == SPEED_HIGH) ? 0.25 : 0.1;
+void BLDCController::setMotorSpeeds(float channel_1, float channel_2, bool std_speed_factor) {
+    float multiplier;
+    if (!std_speed_factor)
+        multiplier = speed_factor_float;
+    else
+        multiplier = (speed_factor == SPEED_HIGH) ? 0.25 : 0.1;
 
     float mL = fmax(-1.0, fmin(1.0, channel_2 + channel_1));
     float mR = fmax(-1.0, fmin(1.0, channel_2 - channel_1));
@@ -27,10 +31,10 @@ void BLDCController::setMotorSpeeds(float channel_1, float channel_2) {
     if (fabs(mL) < 0.1) mL = 0.0;
     if (fabs(mR) < 0.1) mR = 0.0;
 
-    if (mL == 0 && mR == 0) {
-        escLeft.writeMicroseconds(1490);
-        escRight.writeMicroseconds(1490);
-        return;
+    if (fabs(mL) < 0.1 && fabs(mR) < 0.1) {
+        escLeft.writeMicroseconds(1477);
+        escRight.writeMicroseconds(1467);
+        return; 
     }
 
     mL *= multiplier;
@@ -61,6 +65,16 @@ void BLDCController::setSpeedFactor(speedFactor factor) {
         speed_factor = factor;
         Serial.print("Changed speed factor to: ");
         Serial.println(speed_factor == SPEED_HIGH ? "HIGH" : "LOW");
+        Serial.println();
+    }
+}
+
+void BLDCController::setSpeedFactorStick(float factor) {
+    float remapped = (factor + 1.0f) / 2.0f;
+    if (remapped != speed_factor_float) {
+        speed_factor_float = remapped;
+        Serial.print("Changed speed factor to: ");
+        Serial.println(speed_factor_float, 3);
         Serial.println();
     }
 }

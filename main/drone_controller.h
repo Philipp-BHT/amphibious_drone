@@ -8,9 +8,10 @@
 class DroneController {
     private:
         bool armed = false;
+        bool std_speed_factor = false;
 
     public:
-    DroneController();
+    DroneController(bool std_speed_factor = false);
     ~DroneController();
 
     
@@ -26,7 +27,7 @@ class DroneController {
      * @param motorController Reference to a BLDCController instance.
      * @param buoyancyController Reference to a ServoController instance.
      */
-    void drone_control(RC_Receiver& receiver, BLDCController& motorController, ServoController& bouyancy_controller);
+    void drone_control(RCReceiver& receiver, BLDCController& motorController, ServoController& buoyancy_controller);
 
     /**
      * @brief Reads RC channel 5 and 6 and waits until they are in startup position.
@@ -36,9 +37,10 @@ class DroneController {
      * 
      * @param receiver Reference to an RC_Receiver instance.
      */
-    void drone_startup(RC_Receiver& receiver, ServoController& servo, BLDCController& motorController);
+    void drone_startup(RCReceiver& receiver, ServoController& servo, BLDCController& motorController);
 
     bool get_arming_status();
+    bool get_speed_factor_type();
 
     /**
      * @brief Reads channel values and prints the output.
@@ -49,7 +51,7 @@ class DroneController {
      * @param motorController Reference to a BLDCController instance.
      * @param buoyancyController Reference to a ServoController instance.
      */
-    void channel_output_test(RC_Receiver& receiver, int channel, bool cycle_channels);
+    void channel_output_test(RCReceiver& receiver, int channel, bool cycle_channels);
 };
 
 

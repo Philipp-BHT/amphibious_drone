@@ -7,7 +7,7 @@ struct ChannelCalibration {
     int center_raw;  
 };
 
-class RC_Receiver {
+class RCReceiver {
     public:
         /**
          * @brief Initializes the RC receiver.
@@ -17,9 +17,9 @@ class RC_Receiver {
          * 
          * @param dev Boolean that determines if debug messages should be printed.
          */
-        RC_Receiver(bool dev = false); 
+        RCReceiver(bool dev = false); 
 
-        ~RC_Receiver();
+        ~RCReceiver();
 
         /**
          * @brief Reads a channel value from a PWM signal and returns it as a normalized float.
@@ -31,6 +31,7 @@ class RC_Receiver {
          * @param channel Channel to be read.
          */
         float read_channel(int channel);
+
         int get_num_channels();
 
         float normalize_pwm(int pulse_width, const ChannelCalibration& calib);

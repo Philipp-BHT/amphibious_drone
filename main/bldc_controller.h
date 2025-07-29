@@ -3,7 +3,6 @@
 
 #include <Servo.h>
 
-
 /**
  * @brief Speed factor used to scale motor output.
  *
@@ -32,7 +31,7 @@ public:
      * @param channel_1 Left/right joystick input (range -1 to 1)
      * @param channel_2 Forward/backward joystick input (range -1 to 1)
      */
-    void setMotorSpeeds(float channel_1, float channel_2);
+    void setMotorSpeeds(float channel_1, float channel_2, bool std_speed_factor);
 
     void setRawPWM(int pwmLeft, int pwmRight);
 
@@ -42,11 +41,13 @@ public:
      * @param factor Speed mode to apply
      */
     void setSpeedFactor(speedFactor factor);
+    void setSpeedFactorStick(float factor);
 
 private:
     Servo escLeft;
     Servo escRight;                ///< PWM output pins for left and right motors
     speedFactor speed_factor = SPEED_LOW;     ///< Current speed mode
+    float speed_factor_float = 0;
 };
 
 #endif

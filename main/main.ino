@@ -2,7 +2,7 @@
 #include "drone_controller.h"
 
 DroneController drone;
-RC_Receiver receiver(false);
+RCReceiver receiver(false);
 BLDCController *motorController;
 ServoController* bouyancy_controller;
 

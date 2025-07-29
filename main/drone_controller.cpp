@@ -5,10 +5,12 @@
 #include "servo_controller.h"
 
 
-DroneController::DroneController() {};
+DroneController::DroneController(bool std_speed_factor = false) {
+    std_speed_factor = std_speed_factor;
+};
 DroneController::~DroneController() {};
 
-void DroneController::drone_startup(RC_Receiver& receiver, ServoController& servo, BLDCController& motorController) {
+void DroneController::drone_startup(RCReceiver& receiver, ServoController& servo, BLDCController& motorController) {
     Serial.print("Drone not armed");
     Serial.println();
 
@@ -23,7 +25,7 @@ void DroneController::drone_startup(RC_Receiver& receiver, ServoController& serv
         float ch_6 = receiver.read_channel(6);
         ServoDirection ch_6_dir = servo.mapSwitchToDirection(ch_6);
         if (ch_5 > 0.5 && ch_6_dir == STOPPED) {
-            motorController.setMotorSpeeds(1500, 1500);
+            motorController.setMotorSpeeds(1477, 1467, false);
             Serial.print("Drone armed");
             Serial.println();
             armed = true;
@@ -37,22 +39,33 @@ bool DroneController::get_arming_status() {
     return armed;
 };
 
+bool DroneController::get_speed_factor_type() {
+    return std_speed_factor;
+};
 
-void DroneController::drone_control(RC_Receiver& receiver, BLDCController& motorController, ServoController& bouyancyController) {
+
+void DroneController::drone_control(RCReceiver& receiver, BLDCController& motorController, ServoController& buoyancyController) {
+    if (get_speed_factor_type()) {
+        float speed_mode_switch = receiver.read_channel(5);
+        motorController.setSpeedFactor(speed_mode_switch > 0 ? HIGH : LOW);
+    }
+    else {
+        float speed_mode_stick = receiver.read_channel(3);
+        motorController.setSpeedFactorStick(speed_mode_stick);
+    }
+
+    
     float joystick_x = receiver.read_channel(1);
     float joystick_y = receiver.read_channel(2);
-    float speed_mode_switch = receiver.read_channel(5);
+    motorController.setMotorSpeeds(joystick_x, joystick_y, false);
+
     float buoyancy_control = receiver.read_channel(6);
-
-    motorController.setSpeedFactor(speed_mode_switch > 0 ? HIGH : LOW);
-    motorController.setMotorSpeeds(joystick_x, joystick_y);
-
-    ServoDirection dir = bouyancyController.mapSwitchToDirection(buoyancy_control);
-    bouyancyController.startBallast(dir);
+    ServoDirection dir = buoyancyController.mapSwitchToDirection(buoyancy_control);
+    buoyancyController.startBallast(dir);
 }
 
 
-void DroneController::channel_output_test (RC_Receiver& receiver, int channel = 1, bool cycle_channels = false) {
+void DroneController::channel_output_test(RCReceiver& receiver, int channel = 1, bool cycle_channels = false) {
     float channel_value = 0;
 
     channel_value = receiver.read_channel(channel);
