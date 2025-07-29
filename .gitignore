@@ -104,3 +104,4 @@ build/sketch/drone_controller.cpp.d
 build/sketch/drone_controller.cpp.o
 build/sketch/drone_controller.h
 .vscode/arduino.json
+.vscode/settings.json

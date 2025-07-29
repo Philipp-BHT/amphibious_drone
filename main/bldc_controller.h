@@ -45,8 +45,8 @@ public:
 
 private:
     Servo escLeft;
-    Servo escRight;                ///< PWM output pins for left and right motors
-    speedFactor speed_factor = SPEED_LOW;     ///< Current speed mode
+    Servo escRight;               
+    speedFactor speed_factor = SPEED_LOW;  
     float speed_factor_float = 0;
 };
 
