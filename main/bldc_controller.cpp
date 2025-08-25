@@ -32,8 +32,8 @@ void BLDCController::setMotorSpeeds(float channel_1, float channel_2, bool std_s
     if (fabs(mR) < 0.1) mR = 0.0;
 
     if (fabs(mL) < 0.1 && fabs(mR) < 0.1) {
-        escLeft.writeMicroseconds(1477);
-        escRight.writeMicroseconds(1467);
+        escLeft.writeMicroseconds(1485);
+        escRight.writeMicroseconds(1482);
         return; 
     }
 

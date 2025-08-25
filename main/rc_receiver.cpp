@@ -1,8 +1,8 @@
 #include "rc_receiver.h"
 #include <Arduino.h>
 
-const ChannelCalibration RCReceiver::JOYSTICK_X = {975, 1959, 1475};
-const ChannelCalibration RCReceiver::JOYSTICK_Y = {980, 1955, 1478};
+const ChannelCalibration RCReceiver::JOYSTICK_X = {975, 1959, 1490};
+const ChannelCalibration RCReceiver::JOYSTICK_Y = {980, 1955, 1490};
 
 RCReceiver::RCReceiver(bool dev) {
     debug_mode = dev;

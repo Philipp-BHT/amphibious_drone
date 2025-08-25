@@ -25,7 +25,7 @@ void DroneController::drone_startup(RCReceiver& receiver, ServoController& servo
         float ch_6 = receiver.read_channel(6);
         ServoDirection ch_6_dir = servo.mapSwitchToDirection(ch_6);
         if (ch_5 > 0.5 && ch_6_dir == STOPPED) {
-            motorController.setMotorSpeeds(1477, 1467, false);
+            motorController.setMotorSpeeds(1490, 1490, false);
             Serial.print("Drone armed");
             Serial.println();
             armed = true;
